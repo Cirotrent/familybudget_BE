@@ -1,3 +1,22 @@
+server:
+  port: 9090
+
 spring:
   application:
     name: familybudget_BE
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/family_budget
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/family-budget
