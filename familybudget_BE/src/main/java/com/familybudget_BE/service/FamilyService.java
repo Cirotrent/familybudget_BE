@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.familybudget_BE.entity.Family;
 import com.familybudget_BE.entity.FamilyMember;
 import com.familybudget_BE.entity.User;
+import com.familybudget_BE.exceptions.ForbiddenException;
+import com.familybudget_BE.exceptions.NotFoundException;
 import com.familybudget_BE.repository.FamilyMemberRepository;
 import com.familybudget_BE.repository.FamilyRepository;
 import com.familybudget_BE.repository.UserRepository;
@@ -55,19 +57,19 @@ public class FamilyService {
         String currentUser = securityUtils.getCurrentUsername();
         
         if (!keycloakUserService.userExists(username)) {
-            throw new RuntimeException("User does not exist in Keycloak");
+            throw new NotFoundException("User does not exist in Keycloak");
         }
 
         FamilyMember owner = familyMemberRepository
                 .findByFamilyIdAndUserUsernameAndRole(familyId, currentUser, FamilyMember.Role.OWNER)
-                .orElseThrow(() -> new RuntimeException("Not authorized"));
+                .orElseThrow(() -> new ForbiddenException("Not authorized"));
 
         User user = userService.getOrCreateByUsername(username);
 //        User user = userRepository.findByUsername(username)
 //                .orElseThrow(() -> new RuntimeException("User not found"));
 
         Family family = familyRepository.findById(familyId)
-                .orElseThrow(() -> new RuntimeException("Family not found"));
+                .orElseThrow(() -> new NotFoundException("Family not found"));
 
         familyMemberRepository.save(FamilyMember.builder()
                 .family(family)

@@ -14,6 +14,8 @@ import com.familybudget_BE.entity.Category;
 import com.familybudget_BE.entity.Family;
 import com.familybudget_BE.entity.Transaction;
 import com.familybudget_BE.entity.User;
+import com.familybudget_BE.exceptions.ForbiddenException;
+import com.familybudget_BE.exceptions.NotFoundException;
 import com.familybudget_BE.repository.CategoryRepository;
 import com.familybudget_BE.repository.FamilyMemberRepository;
 import com.familybudget_BE.repository.FamilyRepository;
@@ -50,17 +52,17 @@ public class TransactionService {
         String username = securityUtils.getCurrentUsername();
 
         if (!familyMemberRepository.findByFamilyIdAndUserUsername(dto.getFamilyId(), username).isPresent()) {
-            throw new RuntimeException("Not member of family");
+            throw new NotFoundException("Not member of family");
         }
 
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         Category category = categoryRepository.findById(dto.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new NotFoundException("Category not found"));
 
         Family family = familyRepository.findById(dto.getFamilyId())
-                .orElseThrow(() -> new RuntimeException("Family not found"));
+                .orElseThrow(() -> new NotFoundException("Family not found"));
 
         Transaction t = Transaction.builder()
                 .amount(dto.getAmount())
@@ -80,7 +82,7 @@ public class TransactionService {
         String username = securityUtils.getCurrentUsername();
 
         if (!familyMemberRepository.findByFamilyIdAndUserUsername(familyId, username).isPresent()) {
-            throw new RuntimeException("Not authorized");
+            throw new ForbiddenException("Not authorized");
         }
 
         LocalDate start = LocalDate.of(year, month, 1);
