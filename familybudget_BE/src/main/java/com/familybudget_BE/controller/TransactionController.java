@@ -35,15 +35,15 @@ public class TransactionController {
 	        return service.save(dto);
 	    }
 
-//	    @GetMapping
-//	    @PreAuthorize("hasRole('USER')")
-//	    public List<TransactionResponseDTO> getAll(
-//	            @RequestParam(required = false) String type,
-//	            @RequestParam(required = false) LocalDate startDate,
-//	            @RequestParam(required = false) LocalDate endDate) {
-//
-//	        return service.findAll(type, startDate, endDate);
-//	    }
+	    @GetMapping
+	    @PreAuthorize("hasRole('USER')")
+	    public List<TransactionResponseDTO> getAll(
+	            @RequestParam(required = false) String type,
+	            @RequestParam(required = false) LocalDate startDate,
+	            @RequestParam(required = false) LocalDate endDate) {
+
+	        return service.findAll(type, startDate, endDate);
+	    }
 
 	    @DeleteMapping("/{id}")
 	    @PreAuthorize("hasRole('USER')")

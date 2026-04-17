@@ -113,22 +113,22 @@ public class TransactionService {
 
 
 
-//    public List<TransactionResponseDTO> findAll(String type, LocalDate startDate, LocalDate endDate) {
-//
-//        String username = securityUtils.getCurrentUsername();
-//
-//        List<Transaction> transactions;
-//
-//        if (startDate != null && endDate != null) {
-//            transactions = repository.findByUserUsernameAndDateBetween(username, startDate, endDate);
-//        } else if (type != null) {
-//            transactions = repository.findByUserUsernameAndType(username, Transaction.Type.valueOf(type));
-//        } else {
-//            transactions = repository.findByUserUsername(username);
-//        }
-//
-//        return transactions.stream().map(this::mapToDTO).collect(Collectors.toList());
-//    }
+    public List<TransactionResponseDTO> findAll(String type, LocalDate startDate, LocalDate endDate) {
+
+        String username = securityUtils.getCurrentUsername();
+
+        List<Transaction> transactions;
+
+        if (startDate != null && endDate != null) {
+            transactions = repository.findByUserUsernameAndDateBetween(username, startDate, endDate);
+        } else if (type != null) {
+            transactions = repository.findByUserUsernameAndType(username, Transaction.Type.valueOf(type));
+        } else {
+            transactions = repository.findByUserUsername(username);
+        }
+
+        return transactions.stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
 
 
 
