@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.familybudget_BE.dto.MonthlyReportDTO;
@@ -113,21 +114,58 @@ public class TransactionService {
 
 
 
-    public List<TransactionResponseDTO> findAll(String type, LocalDate startDate, LocalDate endDate) {
+//    public List<TransactionResponseDTO> findAll(String type, LocalDate startDate, LocalDate endDate, Long categoryId) {
+//
+//        String username = securityUtils.getCurrentUsername();
+//
+//        List<Transaction> transactions;
+//
+//        if (startDate != null && endDate != null) {
+//            transactions = repository.findByUserUsernameAndDateBetween(username, startDate, endDate);
+//        } else if (type != null) {
+//            transactions = repository.findByUserUsernameAndType(username, Transaction.Type.valueOf(type));
+//        } else {
+//            transactions = repository.findByUserUsername(username);
+//        }
+//
+//        return transactions.stream().map(this::mapToDTO).collect(Collectors.toList());
+//    }
+    
+    public List<TransactionResponseDTO> findAll(
+            String type,
+            LocalDate startDate,
+            LocalDate endDate,
+            Long categoryId,
+            Long familyId
+    ) {
 
         String username = securityUtils.getCurrentUsername();
+        
+        Specification<Transaction> spec = (root, query, cb) -> cb.equal(
+                root.get("user").get("username"), username
+        );
 
-        List<Transaction> transactions;
-
-        if (startDate != null && endDate != null) {
-            transactions = repository.findByUserUsernameAndDateBetween(username, startDate, endDate);
-        } else if (type != null) {
-            transactions = repository.findByUserUsernameAndType(username, Transaction.Type.valueOf(type));
-        } else {
-            transactions = repository.findByUserUsername(username);
+        if (type != null) {
+            spec = spec.and(byType(type));
         }
 
-        return transactions.stream().map(this::mapToDTO).collect(Collectors.toList());
+        if (startDate != null && endDate != null) {
+            spec = spec.and(byDateBetween(startDate, endDate));
+        }
+
+        if (categoryId != null) {
+            spec = spec.and(byCategory(categoryId));
+        }
+
+        if (familyId != null) {
+            spec = spec.and(byFamily(familyId));
+        }
+
+        List<Transaction> transactions = repository.findAll(spec);
+
+        return transactions.stream()
+                .map(this::mapToDTO)
+                .toList();
     }
 
 
@@ -147,6 +185,32 @@ public class TransactionService {
 	                .description(t.getDescription())
 	                .username(t.getUser().getUsername())
 	                .categoryName(t.getCategory().getName())
+	                .familyName(t.getFamily().getName())
 	                .build();
+	    }
+	    
+	    private Specification<Transaction> byUsername(String username) {
+	        return (root, query, cb) ->
+	                cb.equal(root.get("user").get("username"), username);
+	    }
+
+	    private Specification<Transaction> byType(String type) {
+	        return (root, query, cb) ->
+	                cb.equal(root.get("type"), Transaction.Type.valueOf(type));
+	    }
+
+	    private Specification<Transaction> byDateBetween(LocalDate start, LocalDate end) {
+	        return (root, query, cb) ->
+	                cb.between(root.get("date"), start, end);
+	    }
+
+	    private Specification<Transaction> byCategory(Long categoryId) {
+	        return (root, query, cb) ->
+	                cb.equal(root.get("category").get("id"), categoryId);
+	    }
+
+	    private Specification<Transaction> byFamily(Long familyId) {
+	        return (root, query, cb) ->
+	                cb.equal(root.get("family").get("id"), familyId);
 	    }
 }

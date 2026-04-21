@@ -40,9 +40,12 @@ public class TransactionController {
 	    public List<TransactionResponseDTO> getAll(
 	            @RequestParam(required = false) String type,
 	            @RequestParam(required = false) LocalDate startDate,
-	            @RequestParam(required = false) LocalDate endDate) {
+	            @RequestParam(required = false) LocalDate endDate,
+	            @RequestParam(required = false) Long categoryId,
+	            @RequestParam(required = false) Long familyId
+	            ) {
 
-	        return service.findAll(type, startDate, endDate);
+	    	return service.findAll(type, startDate, endDate, categoryId, familyId);
 	    }
 
 	    @DeleteMapping("/{id}")

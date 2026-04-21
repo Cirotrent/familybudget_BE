@@ -15,5 +15,6 @@ public class TransactionResponseDTO {
 	    private LocalDate date;
 	    private String description;
 	    private String categoryName;
+	    private String familyName;
 	    private String username;
 }
