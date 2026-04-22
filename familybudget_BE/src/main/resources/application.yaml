@@ -1,4 +1,15 @@
 server:
+# mySQL
+#  port: 9090
+#  url: jdbc:mysql://localhost:3306/family_budget
+#  username: root
+#  password: root
+
+# postgresql
+#  port: ${PORT:9090}
+#  url: postgresql://localhost:5432/family_budget
+#  username: postgres
+#  password: root
   port: 9090
 
 spring:
@@ -6,14 +17,17 @@ spring:
     name: familybudget_BE
 
   datasource:
-    url: jdbc:mysql://localhost:3306/family_budget
-    username: root
+    url: jdbc:postgresql://localhost:5432/family_budget
+    username: postgres
     password: root
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   security:
     oauth2:

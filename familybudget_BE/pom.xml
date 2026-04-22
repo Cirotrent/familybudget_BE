@@ -11,7 +11,7 @@
 	<groupId>com</groupId>
 	<artifactId>familybudget_BE</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name/>
 	<description/>
 	<url/>
@@ -47,12 +47,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -62,11 +56,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-		    <groupId>com.mysql</groupId>
-		    <artifactId>mysql-connector-j</artifactId>
-		    <scope>runtime</scope>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
@@ -81,6 +70,11 @@
 		    <groupId>org.keycloak</groupId>
 		    <artifactId>keycloak-admin-client</artifactId>
 		    <version>24.0.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
