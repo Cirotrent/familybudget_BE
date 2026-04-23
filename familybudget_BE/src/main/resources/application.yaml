@@ -1,15 +1,17 @@
 server:
-# mySQL
-#  port: 9090
-#  url: jdbc:mysql://localhost:3306/family_budget
-#  username: root
-#  password: root
 
-# postgresql
+
+# svil
 #  port: ${PORT:9090}
 #  url: postgresql://localhost:5432/family_budget
 #  username: postgres
 #  password: root
+
+# prod
+#  port: ${PORT:9090}
+#  url: ${SPRING_DATASOURCE_URL}
+#  username: ${SPRING_DATASOURCE_USERNAME}
+#  password: ${SPRING_DATASOURCE_PASSWORD}
   port: 9090
 
 spring:
@@ -17,9 +19,9 @@ spring:
     name: familybudget_BE
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/family_budget
-    username: postgres
-    password: root
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
     hibernate:
