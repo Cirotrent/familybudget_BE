@@ -12,11 +12,13 @@ public class KeycloakConfig {
     @Bean
     public Keycloak keycloak() {
         return KeycloakBuilder.builder()
-                .serverUrl("http://localhost:8080")
+                .serverUrl("https://keycloak-server-4bwx.onrender.com")
+//                .serverUrl("http://localhost:8080")
                 .realm("family-budget")
                 .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
                 .clientId("spring-client")
-                .clientSecret("c4oS373qLZHammP458TyNlm89bNE3cRP") // se richiesto
+//                .clientSecret("c4oS373qLZHammP458TyNlm89bNE3cRP") //locale
+                .clientSecret("5D851pNKrnLEWAI4bferZyFoyzJkahLt") //render
                 .build();
     }
 }

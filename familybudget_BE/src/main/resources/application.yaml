@@ -12,6 +12,9 @@ server:
 #  url: ${SPRING_DATASOURCE_URL}
 #  username: ${SPRING_DATASOURCE_USERNAME}
 #  password: ${SPRING_DATASOURCE_PASSWORD}
+#  issuer-uri: http://localhost:8080/realms/family-budget LOCALE
+#  https://keycloak-server-4bwx.onrender.com/realms/family-budget RENDER
+
   port: 9090
 
 spring:
@@ -35,4 +38,4 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/family-budget
+          issuer-uri: https://keycloak-server-4bwx.onrender.com/realms/family-budget 
