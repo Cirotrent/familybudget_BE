@@ -104,8 +104,8 @@ public class FamilyService {
     public List<FamilyDTO> getFamiliesByUsername() {
     	String username = securityUtils.getCurrentUsername();
     	
-    	User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+//    	User user = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
 
     	return familyMemberRepository.findByUserUsername(username)
                 .stream()
