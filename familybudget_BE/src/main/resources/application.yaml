@@ -1,21 +1,4 @@
 server:
-
-
-# svil
-#  port: ${PORT:9090}
-#  url: postgresql://localhost:5432/family_budget
-#  username: postgres
-#  password: root
-#
-# issuer-uri: http://localhost:8080/realms/family-budget LOCALE
-
-# prod
-#  port: ${PORT:9090}
-#  url: ${SPRING_DATASOURCE_URL}
-#  username: ${SPRING_DATASOURCE_USERNAME}
-#  password: ${SPRING_DATASOURCE_PASSWORD}
-#  issuer-uri: https://keycloak-server-4bwx.onrender.com/realms/family-budget RENDER
-
   port: 9090
 
 spring:
