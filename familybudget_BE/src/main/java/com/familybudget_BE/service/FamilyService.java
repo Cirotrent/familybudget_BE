@@ -68,9 +68,9 @@ public class FamilyService {
 
         String currentUser = securityUtils.getCurrentUsername();
         
-        if (!keycloakUserService.userExists(username)) {
-            throw new NotFoundException("User does not exist in Keycloak");
-        }
+//        if (!keycloakUserService.userExists(username)) {
+//            throw new NotFoundException("User does not exist in Keycloak");
+//        }
 
         FamilyMember owner = familyMemberRepository
                 .findByFamilyIdAndUserUsernameAndRole(familyId, currentUser, FamilyMember.Role.OWNER)
