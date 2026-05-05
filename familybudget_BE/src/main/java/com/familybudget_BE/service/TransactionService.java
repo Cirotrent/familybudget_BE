@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -131,12 +133,14 @@ public class TransactionService {
 //        return transactions.stream().map(this::mapToDTO).collect(Collectors.toList());
 //    }
     
-    public List<TransactionResponseDTO> findAll(
+    public Page<TransactionResponseDTO> findAll(
             String type,
             LocalDate startDate,
             LocalDate endDate,
             Long categoryId,
-            Long familyId
+            Long familyId,
+            Pageable pageable
+            
     ) {
 
         String username = securityUtils.getCurrentUsername();
@@ -161,11 +165,9 @@ public class TransactionService {
             spec = spec.and(byFamily(familyId));
         }
 
-        List<Transaction> transactions = repository.findAll(spec);
+        Page<Transaction> transactions = repository.findAll(spec,pageable);
 
-        return transactions.stream()
-                .map(this::mapToDTO)
-                .toList();
+        return transactions.map(this::mapToDTO);
     }
 
 

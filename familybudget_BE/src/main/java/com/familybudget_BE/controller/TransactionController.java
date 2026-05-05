@@ -1,8 +1,11 @@
 package com.familybudget_BE.controller;
 
 import java.time.LocalDate;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,15 +40,16 @@ public class TransactionController {
 
 	    @GetMapping
 	    @PreAuthorize("hasRole('USER')")
-	    public List<TransactionResponseDTO> getAll(
+	    public Page<TransactionResponseDTO> getAll(
 	            @RequestParam(required = false) String type,
 	            @RequestParam(required = false) LocalDate startDate,
 	            @RequestParam(required = false) LocalDate endDate,
 	            @RequestParam(required = false) Long categoryId,
-	            @RequestParam(required = false) Long familyId
+	            @RequestParam(required = false) Long familyId,
+	            @PageableDefault(size = 10, sort = "date", direction = Sort.Direction.DESC) Pageable pageable
 	            ) {
 
-	    	return service.findAll(type, startDate, endDate, categoryId, familyId);
+	    	return service.findAll(type, startDate, endDate, categoryId, familyId,pageable );
 	    }
 
 	    @DeleteMapping("/{id}")
